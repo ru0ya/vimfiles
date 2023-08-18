@@ -1,0 +1,72 @@
+set nocompatible
+filetype on
+syntax on
+set nu
+set encoding=UTF-8
+set smarttab
+set smartindent
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set textwidth=80
+set re=0
+set nowrap
+set noswapfile
+set incsearch
+set scrolloff=8
+set guicursor=
+set wildmenu
+set wildmode=list:longest,full
+set wildignore=*.o,*~,*.pyc,*.pyo,*.so,*.sw*,__pycache__
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/matchit.zip'
+Plug 'valloric/youcompleteme'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-commentary'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'wakatime/vim-wakatime'
+Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
+Plug 'luochen1990/rainbow'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+
+" Load NERDTree automatically when Vim starts up
+autocmd VimEnter * NERDTree
+
+" NERDTree settings
+let g:NERDTreeMinimalUI = 1         " Enable minimal UI
+let g:NERDTreeAutoCenter = 1        " Automatically center NERDTree
+let g:NERDTreeChDirMode = 2         " Change directory to the selected file's location
+map <C-n> :NERDTreeToggle<CR>
+
+" Configure NERDTree to use vim-nerdtree-tabs plugin (optional but useful)
+let g:NERDTreeTabs = 1              " Open files in tabs
+let g:nerdtree_tabs_open_on_console_startup = 1 " Open NERDTree on startup if console Vim is used
+
+"autocmd BufWritePost *.js :silent! !eslint --fix %
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'eslint --fix'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+let g:deoplete#sources#eslint#enable_fix = 1
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 1
+let g:ale_enabled = 1
+let g:ale_linters = {
+  \ 'javascript': ['eslint'],
+  \ 'python': ['flake8'],
+  \ }
+let g:ale_fixers = {
+  \ 'javascript': ['eslint'],
+  \ }
+autocmd BufWritePost * :ALEFix
+let g:ale_javascript_eslint_executable = '/home/ruoya/.nvm/versions/node/v12.11.1/bin/eslint'
+let g:ale_python_flake8_executable = '/home/ruoya/.local/bin/flake8'
+let g:ale_lint_delay = 500
+let g:ale_sign_column_always = 1
+call plug#end()
+filetype plugin indent on
