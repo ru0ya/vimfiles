@@ -1,6 +1,8 @@
 set nocompatible
 filetype on
+filetype plugin indent on
 syntax on
+syntax enable
 set nu
 set encoding=UTF-8
 set smarttab
@@ -15,6 +17,8 @@ set incsearch
 set scrolloff=8
 set guicursor=
 set wildmenu
+set showmatch
+set matchtime=30
 set wildmode=list:longest,full
 set wildignore=*.o,*~,*.pyc,*.pyo,*.so,*.sw*,__pycache__
 
@@ -33,9 +37,36 @@ Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
 Plug 'luochen1990/rainbow'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-syntastic/syntastic'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'dense-analysis/ale'
+
+
 
 " Load NERDTree automatically when Vim starts up
 autocmd VimEnter * NERDTree
+
+" vimrc
+
+" Enable TypeScript filetype detection
+autocmd BufRead,BufNewFile *.ts set filetype=typescript
+autocmd BufRead,BufNewFile *.tsx set filetype=typescript.jsx
+
+" Enable automatic formatting on save
+autocmd FileType typescript,tsserver,typescriptreact,tsserverreact nnoremap <buffer> <leader>f :call CocAction('format')<CR>
+autocmd FileType go autocmd BufWritePre <buffer> :silent! execute 'Gofmt'
+
+"Enable code navigation commands
+au FileType go nmap <Leader>gd <Plug>(go-def)
+au FileType go nmap <Leader>gD <Plug>(go-doc)
+
+"Enable guru for finding references
+let g:go_guru_enabled = 1
+
+" Set local leader key
+let g:maplocalleader = ","
+
+" Use local leader key for TypeScript commands
+autocmd FileType typescript,tsserver,typescriptreact,tsserverreact nnoremap <buffer> <localleader>t :CocCommand tsserver.organizeImports<CR>
 
 " NERDTree settings
 let g:NERDTreeMinimalUI = 1         " Enable minimal UI
@@ -58,14 +89,14 @@ let g:ale_fix_on_save = 1
 let g:ale_enabled = 1
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
-  \ 'python': ['flake8'],
+  \ 'python3': ['pycodestyle'],
   \ }
 let g:ale_fixers = {
   \ 'javascript': ['eslint'],
   \ }
 autocmd BufWritePost * :ALEFix
-let g:ale_javascript_eslint_executable = '/home/ruoya/.nvm/versions/node/v12.11.1/bin/eslint'
-let g:ale_python_flake8_executable = '/home/ruoya/.local/bin/flake8'
+let g:ale_javascript_eslint_executable = '/path/to/.nvm/versions/node/v12.11.1/bin/eslint'
+let g:ale_python_flake8_executable = '/path/to/.local/bin/pycodestyle'
 let g:ale_lint_delay = 500
 let g:ale_sign_column_always = 1
 call plug#end()
