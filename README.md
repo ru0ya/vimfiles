@@ -6,4 +6,13 @@
 :pluginstall
 ```  
 
-- Change lines 98, 99
+# Languages Supporrted  
+- Python  
+- Javascript  
+- C  
+- Go  
+- Typescript  
+- HTML  
+- CSS  
+
+# Change lines 98, 99
